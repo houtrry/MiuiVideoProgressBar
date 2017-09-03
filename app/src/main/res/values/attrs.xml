@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TriangleView">
+        <!-- 三角形的背景颜色 -->
+        <attr name="backgroundColor" format="color"/>
+        <!-- 三角形的旋转角度 -->
+        <attr name="rotateAngle" format="integer"/>
+        <!--三角形的边长 -->
+        <attr name="sideLength" format="dimension"/>
+    </declare-styleable>
+</resources>
