@@ -3,6 +3,7 @@ package com.houtrry.miuivideoprogressbar.ui.widget;
 import android.content.Context;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 public class MiVideoProgressBar extends ViewGroup {
 
+    private final static String TAG = MiVideoProgressBar.class.getSimpleName();
     private int mWidth;
     private int mHeight;
     private PointF mCenterPoint;
@@ -58,6 +60,7 @@ public class MiVideoProgressBar extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.d(TAG, "onLayout: changed: "+changed+", left/top/right/bottom: "+left+"/"+top+"/"+right+"/"+bottom);
         View childView0 = getChildAt(0);
         childView0.layout((int)(mCenterPoint.x - childView0.getMeasuredWidth()*mSin60),
                 (int)(mCenterPoint.y - childView0.getMeasuredWidth()*0.5f),
