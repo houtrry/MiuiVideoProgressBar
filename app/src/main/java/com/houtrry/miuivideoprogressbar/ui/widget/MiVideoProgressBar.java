@@ -63,7 +63,7 @@ public class MiVideoProgressBar extends ViewGroup {
                 (int)(mCenterPoint.y - childView0.getMeasuredWidth()*0.5f),
                 (int)(mCenterPoint.x),
                 (int)(mCenterPoint.y + childView0.getMeasuredWidth()*0.5f));
-        childView0.setRotation(30);
+        childView0.setRotation(00);
 
 
 //        View childView1 = getChildAt(1);

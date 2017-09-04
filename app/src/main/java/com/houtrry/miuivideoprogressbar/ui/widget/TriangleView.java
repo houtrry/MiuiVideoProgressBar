@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.houtrry.miuivideoprogressbar.R;
@@ -88,6 +89,7 @@ public class TriangleView extends View {
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
         calculateTrianglePoint();
+        Log.d(TAG, "onSizeChanged: mWidth: "+mWidth+", mHeight: "+mHeight);
     }
 
     @Override
@@ -111,6 +113,7 @@ public class TriangleView extends View {
         } else {
             height = (int) (mSideLength*Math.sin(60*Math.PI/180d));
         }
+        Log.d(TAG, "onMeasure: width: "+width+", height: "+height+", "+mSideLength);
         setMeasuredDimension(width, height);
     }
 
@@ -142,10 +145,10 @@ public class TriangleView extends View {
     private void calculateTrianglePoint() {
         mCenterPoint.set(mWidth * 0.5f, mHeight * 0.5f);
         float radius = (float) (mSideLength * 0.5f / Math.cos(30d * Math.PI / 180d));
-        mThirdPoint.set(mCenterPoint.x, mCenterPoint.y - radius);
+        mThirdPoint.set(mWidth * 0.5f, 0);
         float startEndY = (float) (mCenterPoint.y + radius * Math.cos(30d * Math.PI / 180d));
-        mStartPoint.set(mCenterPoint.x - mSideLength * 0.5f, startEndY);
-        mEndPoint.set(mCenterPoint.x + mSideLength * 0.5f, startEndY);
+        mStartPoint.set(0, mHeight);
+        mEndPoint.set(mWidth, mHeight);
     }
 
     @Override
@@ -154,6 +157,7 @@ public class TriangleView extends View {
         canvas.save();
         canvas.rotate(mRotateAngle);
 
+        canvas.drawColor(Color.parseColor("#962696"));
 
         mPaint.setColor(Color.parseColor("#969696"));
         mTrianglePath.reset();
@@ -167,6 +171,16 @@ public class TriangleView extends View {
         mPaint.setColor(mBackgroundColorColor);
         calculateTrianglePath();
         canvas.drawPath(mTrianglePath, mPaint);
+
+
+        mPaint.setColor(Color.parseColor("#ff0000"));
+        canvas.drawCircle(mStartPoint.x, mStartPoint.y, 10, mPaint);
+
+        mPaint.setColor(Color.parseColor("#00ff00"));
+        canvas.drawCircle(mEndPoint.x, mEndPoint.y, 10, mPaint);
+
+        mPaint.setColor(Color.parseColor("#0000ff"));
+        canvas.drawCircle(mThirdPoint.x, mThirdPoint.y, 10, mPaint);
 
         canvas.restore();
     }
