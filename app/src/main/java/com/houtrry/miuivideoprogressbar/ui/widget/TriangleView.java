@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.houtrry.miuivideoprogressbar.R;
+import com.houtrry.miuivideoprogressbar.utils.DensityUtils;
 
 /**
  * Created by houtrry on 2017/9/2.
@@ -26,6 +27,8 @@ import com.houtrry.miuivideoprogressbar.R;
  */
 
 public class TriangleView extends View {
+
+    private static final String TAG = TriangleView.class.getSimpleName();
 
     private int mBackgroundColorColor = -1;
     private float mSideLength = 50;
@@ -68,7 +71,7 @@ public class TriangleView extends View {
     private void initAttrs(Context context, AttributeSet attrs) {
         final TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.TriangleView);
         mBackgroundColorColor = typeArray.getColor(R.styleable.TriangleView_backgroundColor, context.getResources().getColor(R.color.colorAccent));
-        mSideLength = typeArray.getDimension(R.styleable.TriangleView_sideLength, 50);
+        mSideLength = typeArray.getDimension(R.styleable.TriangleView_sideLength, DensityUtils.dip2px(context, 50));
         mRotateAngle = typeArray.getInt(R.styleable.TriangleView_rotateAngle, 0);
         typeArray.recycle();
     }
@@ -80,39 +83,59 @@ public class TriangleView extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        refreshSideLength(getMeasuredWidth(), getMeasuredHeight());
-
-
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
         calculateTrianglePoint();
     }
 
-    private void refreshSideLength(int measuredWidth, int measuredHeight) {
-        mWidth = measuredWidth;
-        mHeight = measuredHeight;
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+        refreshSideLength(widthSize, heightSize);
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else {
+            width = (int) mSideLength;
+        }
+        if (heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
+        } else {
+            height = (int) (mSideLength*Math.sin(60*Math.PI/180d));
+        }
+        setMeasuredDimension(width, height);
+    }
+
+    private void refreshSideLength(int width, int height) {
         final double minHeight = mSideLength * Math.sin(60d * Math.PI / 180d);
-        if (mWidth < mSideLength && mHeight < minHeight) {//宽高都不够
-            if (mSideLength * mHeight > minHeight * mWidth) {//用宽度计算边长
-                calculateSideLength(true);
+        if (width < mSideLength && height < minHeight) {//宽高都不够
+            if (mSideLength * height > minHeight * width) {//用宽度计算边长
+                calculateSideLength(width, height, true);
             } else {//用高度计算边长
-                calculateSideLength(false);
+                calculateSideLength(width, height, false);
             }
-        } else if (mWidth < mSideLength) {//宽度不够, 高度够, 用宽度计算边长
-            calculateSideLength(true);
-        } else if (mHeight < minHeight) {//宽度够, 高度不够, 用高度计算边长
-            calculateSideLength(false);
+        } else if (width < mSideLength) {//宽度不够, 高度够, 用宽度计算边长
+            calculateSideLength(width, height, true);
+        } else if (height < minHeight) {//宽度够, 高度不够, 用高度计算边长
+            calculateSideLength(width, height, false);
         } else {//宽度高度都够
 
         }
     }
 
-    private void calculateSideLength(boolean useWidthToCalculate) {
+    private void calculateSideLength(int width, int height, boolean useWidthToCalculate) {
         if (useWidthToCalculate) {
-            mSideLength = mWidth;
+            mSideLength = width;
         } else {
-            mSideLength = (float) (mHeight / Math.sin(60d * Math.PI / 180d));
+            mSideLength = (float) (height / Math.sin(60d * Math.PI / 180d));
         }
     }
 
@@ -175,5 +198,10 @@ public class TriangleView extends View {
             mTrianglePath.lineTo(mEndPoint.x + (mThirdPoint.x - mEndPoint.x) * mProgress, mEndPoint.y + (mThirdPoint.y - mEndPoint.y) * mProgress);
             mTrianglePath.close();
         }
+    }
+
+    public void setRotateAngle(int rotateAngle) {
+        mRotateAngle = rotateAngle;
+        ViewCompat.postInvalidateOnAnimation(this);
     }
 }
