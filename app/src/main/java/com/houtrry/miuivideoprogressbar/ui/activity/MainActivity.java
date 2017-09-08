@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMiuiVideoProgressBar = (MIUIVideoProgressBar) findViewById(R.id.miuiVideoProgressBar);
-
-//        TriangleView triangleView = (TriangleView) findViewById(R.id.triangleView);
-//        triangleView.setProgress(0.2f, true);
     }
 
     public void start(View view) {
