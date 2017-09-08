@@ -111,7 +111,7 @@ public class MIUIVideoProgressBar extends View {
     }
 
     public void startAnimation() {
-        mObjectAnimator = ObjectAnimator.ofFloat(this, "progress", 0f, 1.0f, 2.0f,3.0f, 4.0f);
+        mObjectAnimator = ObjectAnimator.ofFloat(this, "progress", 0f, 4.0f);
         mObjectAnimator.setDuration(2000);
         mObjectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mObjectAnimator.setRepeatCount(-1);
