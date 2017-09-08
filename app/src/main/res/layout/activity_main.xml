@@ -8,6 +8,23 @@
     android:layout_height="match_parent"
     tools:context="com.houtrry.miuivideoprogressbar.ui.activity.MainActivity">
 
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="start"
+        android:textAllCaps="false"
+        android:text="start"
+        android:textSize="16sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start"
+        android:onClick="stop"
+        android:textAllCaps="false"
+        android:text="stop"
+        android:textSize="16sp"/>
     <com.houtrry.miuivideoprogressbar.ui.widget.MiVideoProgressBar
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -28,6 +45,7 @@
 
 
     <com.houtrry.miuivideoprogressbar.ui.widget.MIUIVideoProgressBar
+        android:id="@+id/miuiVideoProgressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"/>
