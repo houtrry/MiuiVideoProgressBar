@@ -12,6 +12,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         android:background="@android:color/holo_green_light">
 
         <com.houtrry.miuivideoprogressbar.ui.widget.TriangleView
@@ -25,4 +26,9 @@
 
     </com.houtrry.miuivideoprogressbar.ui.widget.MiVideoProgressBar>
 
+
+    <com.houtrry.miuivideoprogressbar.ui.widget.MIUIVideoProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
