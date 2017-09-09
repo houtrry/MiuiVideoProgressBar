@@ -2,6 +2,7 @@ package com.houtrry.miuivideoprogressbar.ui.widget;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -35,6 +36,8 @@ public class MIUIVideoProgressBar extends View {
     private PointF mCenterPoint;
     private PointF[] mPointFs;
     private ObjectAnimator mObjectAnimator;
+    private long mDuration = 2000;
+    private TimeInterpolator mTimeInterpolator = new AccelerateDecelerateInterpolator();
 
     public MIUIVideoProgressBar(Context context) {
         this(context, null);
@@ -127,14 +130,22 @@ public class MIUIVideoProgressBar extends View {
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
+    public void setDuration(long duration) {
+        mDuration = duration;
+    }
+
+    public void setTimeInterpolator(TimeInterpolator timeInterpolator) {
+        mTimeInterpolator = timeInterpolator;
+    }
+
     public void startAnimation() {
         if (mObjectAnimator != null && mObjectAnimator.isRunning()) {
             mObjectAnimator.cancel();
         }
         isReverse = false;
         mObjectAnimator = ObjectAnimator.ofFloat(this, "progress", 0f, 4.0f);
-        mObjectAnimator.setDuration(2000);
-        mObjectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mObjectAnimator.setDuration(mDuration);
+        mObjectAnimator.setInterpolator(mTimeInterpolator);
         mObjectAnimator.setRepeatCount(-1);
         mObjectAnimator.setRepeatMode(ValueAnimator.REVERSE);
         mObjectAnimator.addListener(new Animator.AnimatorListener() {
