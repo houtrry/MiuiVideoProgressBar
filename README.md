@@ -23,4 +23,4 @@
   canvas.drawPath(path, paint);  
 ```  
 2. 那么, 现在的问题就是来计算三角形的三个点了. 在已知六个点的坐标和当前进度progress的情况下, 计算每个三角形的当前位置也只是个很简单的数学几何问题.  
-3. 这里有个问题就是渐增和渐减状态下, 四个三角形的变化顺序不同. 其实仔细分析的话, 需要处理的只是三角形2和三角形3. 在渐减的情况下, 要调换一下变化顺序. 这里, 我的处理方式是, 处理progress. 代码中, progress的值是一个0~4.0的值, progress变换过程中, 我们要分别计算每个三角形的progress(范围0~1.0, 我们称之为currentProgress), 对于第二个三角形, 渐增时, currentProgress = progress - 1, 渐减时, currentProgress = progress - 2. 同理, 对于第三个三角形, 渐增时, currentProgress = progress - 2, 渐减时, currentProgress = progress - 1. 通过这样的处理, 就可以达到修改变化顺序的目的.
+3. 这里有个问题就是渐增和渐减状态下, 四个三角形的变化顺序不同. 其实仔细分析的话, 需要处理的只是三角形2和三角形3. 在渐减的情况下, 要调换一下变化顺序. 这里, 我的处理方式是, 处理progress. 代码中, progress的值是一个0 ~ 4.0的值, progress变换过程中, 我们要分别计算每个三角形的progress(范围0 ~ 1.0, 我们称之为currentProgress), 对于第二个三角形, 渐增时, currentProgress = progress - 1, 渐减时, currentProgress = progress - 2. 同理, 对于第三个三角形, 渐增时, currentProgress = progress - 2, 渐减时, currentProgress = progress - 1. 通过这样的处理, 就可以达到修改变化顺序的目的.
