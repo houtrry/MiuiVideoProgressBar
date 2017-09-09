@@ -73,11 +73,14 @@ public class MIUIVideoProgressBar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
+        //计算三角形的边长(这里取高度的一半)
         mTriangleWidth = mHeight * 0.5f;
+        //计算三角形的高度
         mTriangleHeight = (float) (mTriangleWidth * Math.sin(60d * Math.PI / 180));
-
+        //取整个View中心点的坐标
         mCenterPoint = new PointF(mWidth * 0.5f, mHeight * 0.5f);
 
+        //计算三角形的六个点的坐标
         mPointFs = new PointF[6];
         mPointFs[0] = new PointF(mCenterPoint.x - mTriangleHeight, mCenterPoint.y - mTriangleWidth * 1.0f);
         mPointFs[1] = new PointF(mCenterPoint.x - mTriangleHeight, mCenterPoint.y);
@@ -86,6 +89,7 @@ public class MIUIVideoProgressBar extends View {
         mPointFs[4] = new PointF(mCenterPoint.x, mCenterPoint.y + mTriangleWidth * 0.5f);
         mPointFs[5] = new PointF(mCenterPoint.x + mTriangleHeight, mCenterPoint.y);
 
+        //初始化四个小三角形
         mTriangleView0 = new TriangleView(mPointFs[4], mPointFs[3], mPointFs[1], Color.parseColor("#B990CD"));
         mTriangleView1 = new TriangleView(mPointFs[1], mPointFs[3], mPointFs[0], Color.parseColor("#FAAA21"));
         mTriangleView2 = new TriangleView(mPointFs[3], mPointFs[4], mPointFs[5], Color.parseColor("#58B8C2"));
