@@ -166,12 +166,6 @@ public class MIUIVideoProgressBar extends View {
                 isReverse = !isReverse;
             }
         });
-        mObjectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setProgress((Float) animation.getAnimatedValue());
-            }
-        });
         mObjectAnimator.start();
     }
 
