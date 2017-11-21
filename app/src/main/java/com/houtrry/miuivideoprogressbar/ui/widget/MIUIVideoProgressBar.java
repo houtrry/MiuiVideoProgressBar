@@ -100,17 +100,18 @@ public class MIUIVideoProgressBar extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mTriangleView0.drawTriangleView(canvas, mPaint, progress, isReverse);
         mTriangleView1.drawTriangleView(canvas, mPaint, progress - (isReverse ? 2 : 1), isReverse);
         mTriangleView2.drawTriangleView(canvas, mPaint, progress - (isReverse ? 1 : 2), isReverse);
         mTriangleView3.drawTriangleView(canvas, mPaint, progress - 3, isReverse);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        clearAnimator();
     }
 
     /**
@@ -169,7 +170,10 @@ public class MIUIVideoProgressBar extends View {
         mObjectAnimator.start();
     }
 
-    public void clearAnimation() {
+    /**
+     * 清除动画
+     */
+    public void clearAnimator() {
         if (mObjectAnimator != null && mObjectAnimator.isRunning()) {
             mObjectAnimator.cancel();
             this.clearAnimation();
